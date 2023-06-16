@@ -5,6 +5,12 @@
     "account": {
       "authenticate": "/business/authenticate",
       "get_wallet": "/wallet/business"
+    },
+    "requests": {
+      "initialize_request": "/broker/init_request_ride/business",
+      "confirm_request": "/broker/confirm_ride_request/business",
+      "initialize_batch_requests": "/broker/init_batch_requests/business",
+      "confirm_batch_requests": "/broker/confirm_batch_requests/business"
     }
   }
 }

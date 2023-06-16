@@ -87,10 +87,16 @@ export class Accounts {
   }
 
   public authenticate() {
-    return this.agent.createKwikPikCallableInstance<Account>(config.paths.account.authenticate, "get");
+    return this.agent.createKwikPikCallableInstance<Account>(
+      config.paths.account.authenticate,
+      "get"
+    );
   }
 
   public wallet() {
-    return this.agent.createKwikPikCallableInstance<AccountWallet>(config.paths.account.get_wallet, "get");
+    return this.agent.createKwikPikCallableInstance<AccountWallet>(
+      config.paths.account.get_wallet,
+      "get"
+    );
   }
 }

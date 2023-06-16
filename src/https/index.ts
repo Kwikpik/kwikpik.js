@@ -27,7 +27,12 @@ class KwikPikSendableHTTPsService<T> {
    */
   body: any;
 
-  constructor(path: string, agent: AxiosInstance, body: any, sendableType: "post" | "patch" = "post") {
+  constructor(
+    path: string,
+    agent: AxiosInstance,
+    body: any,
+    sendableType: "post" | "patch" = "post"
+  ) {
     this.path = path;
     this.agent = agent;
     this.body = body;
@@ -36,8 +41,12 @@ class KwikPikSendableHTTPsService<T> {
 
   send() {
     return this.sendableType === "post"
-      ? this.agent.post<KwikPikGenericResponse<T>>(this.path, this.body).then((resp) => resp.data.result)
-      : this.agent.patch<KwikPikGenericResponse<T>>(this.path, this.body).then((resp) => resp.data.result);
+      ? this.agent
+          .post<KwikPikGenericResponse<T>>(this.path, this.body)
+          .then((resp) => resp.data.result)
+      : this.agent
+          .patch<KwikPikGenericResponse<T>>(this.path, this.body)
+          .then((resp) => resp.data.result);
   }
 }
 
@@ -57,7 +66,11 @@ class KwikPikCallableHTTPsService<T> {
    */
   agent: AxiosInstance;
 
-  constructor(path: string, agent: AxiosInstance, callableType: "get" | "delete" = "get") {
+  constructor(
+    path: string,
+    agent: AxiosInstance,
+    callableType: "get" | "delete" = "get"
+  ) {
     this.path = path;
     this.agent = agent;
     this.callableType = callableType;
@@ -65,8 +78,12 @@ class KwikPikCallableHTTPsService<T> {
 
   call() {
     return this.callableType === "get"
-      ? this.agent.get<KwikPikGenericResponse<T>>(this.path).then((resp) => resp.data.result)
-      : this.agent.delete<KwikPikGenericResponse<T>>(this.path).then((resp) => resp.data.result);
+      ? this.agent
+          .get<KwikPikGenericResponse<T>>(this.path)
+          .then((resp) => resp.data.result)
+      : this.agent
+          .delete<KwikPikGenericResponse<T>>(this.path)
+          .then((resp) => resp.data.result);
   }
 }
 
@@ -74,7 +91,8 @@ export class KwikPikHTTPsAgent {
   private axiosInstance: AxiosInstance;
 
   constructor(apiKey: string, environment: "dev" | "prod" = "prod") {
-    const baseUrl = environment === "prod" ? config.baseProdUrl : config.baseDevUrl;
+    const baseUrl =
+      environment === "prod" ? config.baseProdUrl : config.baseDevUrl;
     let headers = {};
     let axiosConfig = {};
 
@@ -83,11 +101,27 @@ export class KwikPikHTTPsAgent {
     this.axiosInstance = axios.create(axiosConfig);
   }
 
-  public createKwikPikSendableInstance<T>(path: string, sendableType: "post" | "patch", body: any) {
-    return new KwikPikSendableHTTPsService<T>(path, this.axiosInstance, body, sendableType);
+  public createKwikPikSendableInstance<T>(
+    path: string,
+    sendableType: "post" | "patch",
+    body: any
+  ) {
+    return new KwikPikSendableHTTPsService<T>(
+      path,
+      this.axiosInstance,
+      body,
+      sendableType
+    );
   }
 
-  public createKwikPikCallableInstance<T>(path: string, callableType: "get" | "delete") {
-    return new KwikPikCallableHTTPsService<T>(path, this.axiosInstance, callableType);
+  public createKwikPikCallableInstance<T>(
+    path: string,
+    callableType: "get" | "delete"
+  ) {
+    return new KwikPikCallableHTTPsService<T>(
+      path,
+      this.axiosInstance,
+      callableType
+    );
   }
 }
