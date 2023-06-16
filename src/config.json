@@ -1,0 +1,10 @@
+{
+  "baseProdUrl": "https://gateway.kwikpik.io/api",
+  "baseDevUrl": "http://52.71.120.55:14500/api",
+  "paths": {
+    "account": {
+      "authenticate": "/business/authenticate",
+      "get_wallet": "/wallet/business"
+    }
+  }
+}
