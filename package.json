@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write **/**/*.{ts,js,json}"
+    "format": "prettier --write **/**/*.{ts,js,json}",
+    "build": "rm -rf dist && tsc"
   },
   "author": "Kingsley Victor",
   "license": "ISC",
