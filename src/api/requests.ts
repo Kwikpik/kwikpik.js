@@ -84,7 +84,7 @@ interface Request {
 type InitRequestResponse = Request & { amount: number };
 
 export class Requests {
-  private agent: KwikPikHTTPsAgent;
+  agent: KwikPikHTTPsAgent;
 
   protected constructor(apiKey: string, environment: "dev" | "prod" = "prod") {
     this.agent = new KwikPikHTTPsAgent(apiKey, environment);

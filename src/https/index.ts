@@ -6,7 +6,7 @@ interface KwikPikGenericResponse<T> {
   result: T;
 }
 
-class KwikPikSendableHTTPsService<T> {
+export class KwikPikSendableHTTPsService<T> {
   /**
    * Whether this is a 'post' or 'patch' request
    */
@@ -50,7 +50,7 @@ class KwikPikSendableHTTPsService<T> {
   }
 }
 
-class KwikPikCallableHTTPsService<T> {
+export class KwikPikCallableHTTPsService<T> {
   /**
    * Whether this is a 'post' or 'patch' request
    */
