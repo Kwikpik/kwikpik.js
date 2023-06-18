@@ -1,6 +1,6 @@
 import assert from "assert";
 import { KwikPikHTTPsAgent } from "../https";
-import { forEach } from "lodash";
+import { assign, forEach, isEqual } from "lodash";
 import requestsSchema from "../schemas/requests";
 import config from "../config.json";
 
@@ -81,9 +81,41 @@ interface Request {
   phoneNumber: number;
 }
 
+export interface RequestMessage {
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+  userId: string;
+  packageDetails: {
+    category: string;
+    product: string;
+    description: string;
+    weight: number | null;
+    quantity: number;
+    image: string;
+    value: number | null;
+  };
+  selectedVehicleType:
+    | "car"
+    | "bus"
+    | "bicycle"
+    | "truck"
+    | "van"
+    | "motorcycle";
+  userType: "BUSINESS" | "REGULAR_USER";
+  destination: {
+    latitude: number;
+    longitude: number;
+  };
+  recipientPhoneNumber: string;
+  recipientName: string;
+  phoneNumber: string;
+}
+
 interface InitRequestResponse {
   id: string;
-  data: Request;
+  data: RequestMessage;
   type: string;
 }
 
@@ -100,6 +132,13 @@ export class Requests {
     this.agent = new KwikPikHTTPsAgent(apiKey, environment);
   }
 
+  /**
+   *
+   * @param apiKey Your Kwik-Pik API key
+   * @param environment dev or prod (development or production)
+   * @description Intializes a request object
+   * @returns
+   */
   static initialize(apiKey: string, environment?: "dev" | "prod") {
     return new Requests(apiKey, environment);
   }
@@ -119,6 +158,18 @@ export class Requests {
         const messages = error.details.map((e) => e.message);
         throw new Error(JSON.stringify(messages, undefined, 2));
       }
+    });
+
+    forEach(requests, (request, index) => {
+      if (!request.quantity) assign(request, { quantity: 1 });
+
+      if (!request.description)
+        assign(request, { description: "no description" });
+
+      if (!request.image) assign(request, { image: "" });
+
+      if (!isEqual(request, requests[index]))
+        requests.splice(index, 1, request);
     });
 
     const path =

@@ -4,13 +4,15 @@
   "paths": {
     "account": {
       "authenticate": "/business/authenticate",
-      "get_wallet": "/wallet/business"
+      "get_wallet": "/wallet/business",
+      "pay_for_request": "/wallet/business/pay_for_request"
     },
     "requests": {
       "initialize_request": "/broker/init_request_ride/business",
       "confirm_request": "/broker/confirm_ride_request/business",
       "initialize_batch_requests": "/broker/init_batch_requests/business",
-      "confirm_batch_requests": "/broker/confirm_batch_requests/business"
+      "confirm_batch_requests": "/broker/confirm_batch_requests/business",
+      "get_requests_by_account": "/requests/users/:userId"
     }
   }
 }

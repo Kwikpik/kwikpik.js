@@ -8,17 +8,12 @@ const requestsSchema = Joi.object({
   description: Joi.string().optional(),
   weight: Joi.number().optional(),
   quantity: Joi.number().integer().optional(),
-  image: Joi.string().base64().optional(),
+  image: Joi.string().base64().allow("").optional(),
   destinationLatitude: Joi.number().required(),
   destinationLongitude: Joi.number().required(),
-  vehicleType: Joi.string().valid(
-    "car",
-    "bus",
-    "bicycle",
-    "van",
-    "truck",
-    "motorcycle"
-  ),
+  vehicleType: Joi.string()
+    .valid("car", "bus", "bicycle", "van", "truck", "motorcycle")
+    .required(),
   recipientName: Joi.string().required(),
   recipientPhoneNumber: Joi.string()
     .max(50)

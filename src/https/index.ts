@@ -91,13 +91,13 @@ export class KwikPikHTTPsAgent {
   private axiosInstance: AxiosInstance;
 
   constructor(apiKey: string, environment: "dev" | "prod" = "prod") {
-    const baseUrl =
+    const baseURL =
       environment === "prod" ? config.baseProdUrl : config.baseDevUrl;
     let headers = {};
     let axiosConfig = {};
 
     headers = assign(headers, { Authorization: `X-API-Key ${apiKey}` });
-    axiosConfig = assign(axiosConfig, { baseUrl, headers });
+    axiosConfig = assign(axiosConfig, { baseURL, headers });
     this.axiosInstance = axios.create(axiosConfig);
   }
 
