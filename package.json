@@ -1,6 +1,6 @@
 {
   "name": "@kwikpik/kwikpik.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Javascript/Typescript convenience library that interfaces with the Kwik Pik business API",
   "main": "dist/index.js",
   "scripts": {
