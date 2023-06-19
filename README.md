@@ -111,3 +111,46 @@ To create new dispatch requests, utilize the `createDispatchRequests` function. 
     .send();
 })()
 ```
+
+The `send` method returns a `Promise<InitRequestResponse | InitRequestResponse[]>`. You can either await it or call `then`. The `InitRequestResponse` interface looks like this:
+
+```typescript
+interface RequestMessage {
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+  userId: string;
+  packageDetails: {
+    category: string;
+    product: string;
+    description: string;
+    weight: number | null;
+    quantity: number;
+    image: string;
+    value: number | null;
+  };
+  selectedVehicleType:
+    | "car"
+    | "bus"
+    | "bicycle"
+    | "truck"
+    | "van"
+    | "motorcycle";
+  userType: "BUSINESS" | "REGULAR_USER";
+  destination: {
+    latitude: number;
+    longitude: number;
+  };
+  recipientPhoneNumber: string;
+  recipientName: string;
+  phoneNumber: string;
+}
+
+interface InitRequestResponse {
+  id: string;
+  data: RequestMessage;
+  type: string;
+  amount?: number;
+}
+```
