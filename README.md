@@ -11,6 +11,12 @@
 
 `kwikpik.js` is a simple and convenient npm package that interfaces with Kwik-Pik's gateway and makes it possible to interact with business-relevant endpoints. If you aim to provide logistic services to customers without having to worry about configuration and code, and if you love Javascript, then this package is for you.
 
+
+## Table of Content
+
+1. [Installation](#installation)
+2. [Overview & Usage](#overview--usage)
+
 ## Installation
 
 The package can be installed using traditional package managers like `npm` and `yarn` like so:
