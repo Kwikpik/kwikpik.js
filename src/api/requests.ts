@@ -1,6 +1,6 @@
 import assert from "assert";
 import { KwikPikHTTPsAgent } from "../https";
-import { assign, forEach, isEqual } from "lodash";
+import { assign, forEach, isEqual, replace } from "lodash";
 import requestsSchema from "../schemas/requests";
 import config from "../config.json";
 
@@ -113,10 +113,25 @@ export interface RequestMessage {
   phoneNumber: string;
 }
 
+interface SingleRequestResponse extends RequestMessage {
+  status:
+    | "CANCELLED"
+    | "DELIVERED"
+    | "INIT_RIDE_REQUEST"
+    | "CONFIRMED_RIDE_REQUEST";
+  riderId: string | null;
+  isInTransit: boolean;
+  createdAt: string;
+  updatedAt: string;
+  id: string;
+  amount: number;
+}
+
 interface InitRequestResponse {
   id: string;
   data: RequestMessage;
   type: string;
+  amount?: number;
 }
 
 interface ConfirmRequestResponse {
@@ -125,8 +140,14 @@ interface ConfirmRequestResponse {
   type: string;
 }
 
+interface DeleteRequestResponse {
+  id: string;
+  data: { requestMessageId: string };
+  type: string;
+}
+
 export class Requests {
-  agent: KwikPikHTTPsAgent;
+  private agent: KwikPikHTTPsAgent;
 
   protected constructor(apiKey: string, environment: "dev" | "prod" = "prod") {
     this.agent = new KwikPikHTTPsAgent(apiKey, environment);
@@ -210,5 +231,39 @@ export class Requests {
     return this.agent.createKwikPikSendableInstance<
       ConfirmRequestResponse[] | ConfirmRequestResponse
     >(path, "post", data);
+  }
+
+  /**
+   *
+   * @param requestId The request ID
+   * @description Retrieves a single request using its ID
+   * @returns
+   */
+  public getSingleRequest(requestId: string) {
+    assert.ok(typeof requestId === "string", "'requestId' must be a string");
+    const path = replace(
+      config.paths.requests.get_single_request,
+      ":id",
+      requestId
+    );
+    return this.agent.createKwikPikCallableInstance<SingleRequestResponse>(
+      path,
+      "get"
+    );
+  }
+
+  /**
+   *
+   * @param requestId The ID of the request to delete
+   * @description Deletes a request. Throws an error if the utilizer is attempting to delete a request they did not create or a request that has already been confirmed.
+   * @returns
+   */
+  public deleteRequest(requestId: string) {
+    assert.ok(typeof requestId === "string", "'requestId' must be a string");
+    return this.agent.createKwikPikSendableInstance<DeleteRequestResponse>(
+      config.paths.requests.delete_single_request,
+      "delete",
+      { requestId }
+    );
   }
 }

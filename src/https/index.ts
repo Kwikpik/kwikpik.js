@@ -10,7 +10,7 @@ export class KwikPikSendableHTTPsService<T> {
   /**
    * Whether this is a 'post' or 'patch' request
    */
-  sendableType: "post" | "patch";
+  sendableType: "post" | "patch" | "delete";
 
   /**
    * Url path
@@ -31,7 +31,7 @@ export class KwikPikSendableHTTPsService<T> {
     path: string,
     agent: AxiosInstance,
     body: any,
-    sendableType: "post" | "patch" = "post"
+    sendableType: "post" | "patch" | "delete" = "post"
   ) {
     this.path = path;
     this.agent = agent;
@@ -44,8 +44,14 @@ export class KwikPikSendableHTTPsService<T> {
       ? this.agent
           .post<KwikPikGenericResponse<T>>(this.path, this.body)
           .then((resp) => resp.data.result)
-      : this.agent
+      : this.sendableType === "patch"
+      ? this.agent
           .patch<KwikPikGenericResponse<T>>(this.path, this.body)
+          .then((resp) => resp.data.result)
+      : this.agent
+          .delete<KwikPikGenericResponse<T>>(this.path, {
+            data: this.body
+          })
           .then((resp) => resp.data.result);
   }
 }
@@ -103,7 +109,7 @@ export class KwikPikHTTPsAgent {
 
   public createKwikPikSendableInstance<T>(
     path: string,
-    sendableType: "post" | "patch",
+    sendableType: "post" | "patch" | "delete",
     body: any
   ) {
     return new KwikPikSendableHTTPsService<T>(

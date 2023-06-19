@@ -101,6 +101,8 @@ interface PaymentResponse {
   requestId: string;
   status: "PENDING" | "PAID";
   kind: "CRYPTO" | "FIAT";
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface AccountRequestResponse extends RequestMessage {
