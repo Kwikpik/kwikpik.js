@@ -4,16 +4,20 @@
   "description": "Javascript/Typescript convenience library that interfaces with the Kwik Pik business API",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write **/**/*.{ts,js,json}",
+    "build": "rm -rf dist && tsc"
   },
   "author": "Kingsley Victor",
   "license": "ISC",
   "dependencies": {
+    "assert": "^2.0.0",
     "axios": "^1.4.0",
     "joi": "^17.9.2",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
+    "@types/assert": "^1.5.6",
     "@types/joi": "^17.2.3",
     "@types/lodash": "^4.14.195",
     "typescript": "^5.1.3"
