@@ -14,7 +14,8 @@
       "confirm_batch_requests": "/broker/confirm_batch_requests/business",
       "get_requests_by_account": "/requests/users/:userId",
       "get_single_request": "/ride_request/:id",
-      "delete_single_request": "/broker/ride_delete/business"
+      "delete_single_request": "/broker/ride_delete/business",
+      "update_single_request": "/broker/ride_update/business/:id"
     }
   }
 }

@@ -1,7 +1,7 @@
 import assert from "assert";
 import { KwikPikHTTPsAgent } from "../https";
 import { assign, forEach, isEqual, replace } from "lodash";
-import requestsSchema from "../schemas/requests";
+import { initRequestSchema, updateRequestSchema } from "../schemas/requests";
 import config from "../config.json";
 
 interface Request {
@@ -146,6 +146,12 @@ interface DeleteRequestResponse {
   type: string;
 }
 
+interface UpdateRequestResponse {
+  id: string;
+  type: string;
+  data: { requestId: string; [key: string]: any };
+}
+
 export class Requests {
   private agent: KwikPikHTTPsAgent;
 
@@ -174,7 +180,7 @@ export class Requests {
     assert.ok(requests.length > 0, "invalid number of requests. must be > 0");
 
     forEach(requests, (request) => {
-      const { error } = requestsSchema.validate(request);
+      const { error } = initRequestSchema.validate(request);
       if (error) {
         const messages = error.details.map((e) => e.message);
         throw new Error(JSON.stringify(messages, undefined, 2));
@@ -264,6 +270,34 @@ export class Requests {
       config.paths.requests.delete_single_request,
       "delete",
       { requestId }
+    );
+  }
+
+  /**
+   *
+   * @param requestId ID of the request you want to update
+   * @param body Parameters for the request
+   * @description Update a request. Must be an unconfirmed request
+   * @returns
+   */
+  public updateRequest(
+    requestId: string,
+    body: Partial<Omit<RequestMessage, "userType" | "userId">>
+  ) {
+    const { error } = updateRequestSchema.validate(body);
+    if (error) {
+      const messages = error.details.map((e) => e.message);
+      throw new Error(JSON.stringify(messages, undefined, 2));
+    }
+    const path = replace(
+      config.paths.requests.update_single_request,
+      ":id",
+      requestId
+    );
+    return this.agent.createKwikPikSendableInstance<UpdateRequestResponse>(
+      path,
+      "patch",
+      body
     );
   }
 }
