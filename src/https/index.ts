@@ -10,22 +10,22 @@ export class KwikPikSendableHTTPsService<T> {
   /**
    * Whether this is a 'post' or 'patch' request
    */
-  sendableType: "post" | "patch" | "delete";
+  private sendableType: "post" | "patch" | "delete";
 
   /**
    * Url path
    */
-  path: string;
+  private path: string;
 
   /**
    *  The https agent used in executing the request.
    */
-  agent: AxiosInstance;
+  private agent: AxiosInstance;
 
   /**
    *  The request body
    */
-  body: any;
+  private body: any;
 
   constructor(
     path: string,
@@ -60,17 +60,17 @@ export class KwikPikCallableHTTPsService<T> {
   /**
    * Whether this is a 'post' or 'patch' request
    */
-  callableType: "get" | "delete";
+  private callableType: "get" | "delete";
 
   /**
    * Url path
    */
-  path: string;
+  private path: string;
 
   /**
    *  The https agent used in executing the request.
    */
-  agent: AxiosInstance;
+  private agent: AxiosInstance;
 
   constructor(
     path: string,
