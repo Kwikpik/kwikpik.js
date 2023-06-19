@@ -232,3 +232,64 @@ interface ConfirmRequestResponse {
   type: string;
 }
 ```
+
+### Accounts
+
+Utility class that is relevant to accounts.
+
+#### Authenticating accounts
+
+```javascript
+// Removed for the sake brevity
+(async () => {
+  const account = await kwikpik.accounts.authenticate().call();
+})();
+```
+
+The above code returns an `Promise<Account>`. The `Account` interface looks like this:
+
+```typescript
+interface Account {
+  /**
+   * Name of your business
+   */
+  name: string;
+
+  /**
+   *  Account id
+   */
+  id: string;
+
+  /**
+   *  Account email
+   */
+  email: string;
+
+  /**
+   *  Account phone number
+   */
+  phoneNumber: string;
+
+  /**
+   * When the account was created
+   */
+  createdAt: string;
+
+  /**
+   * When the account was updated
+   */
+  updatedAt: string;
+
+  /**
+   *  Authentication token
+   */
+  token?: string;
+
+  /**
+   * If this account has been verified
+   */
+  isVerified: boolean;
+}
+```
+
+**Extensive documentation coming soon**
