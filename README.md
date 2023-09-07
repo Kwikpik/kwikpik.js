@@ -81,32 +81,31 @@ kwikpik.requests; // Requests instance
 
 #### Creating dispatch requests
 
-To create new dispatch requests, utilize the `createDispatchRequests` function. It takes an array of requests as argument. It is important to take to mind that this doesn't mean the requests would be broadcasted to available riders. You'd have to pay for them first and then confirm them before they get broadcasted.
+To create new dispatch requests, utilize the `createDispatchRequest` function. It takes a request object as argument. It is important to take to mind that this doesn't mean the requests would be broadcasted to available riders. You'd have to pay for them first and then confirm them before they get broadcasted.
 
 ```javascript
 // Removed for brevity sake
 
 (async () => {
   const newRequest = await kwikpik.requests
-    .createDispatchRequests([
-      {
-        category: "Food",
-        longitude: 3.623563,
-        latitude: 6.4784693,
-        destinationLongitude: 3.3252381,
-        destinationLatitude: 6.513657500000001,
-        product: "Rice & chicken",
-        phoneNumber: "+2349066277540",
-        recipientName: "Kingsley Marcus",
-        recipientPhoneNumber: "+2348166691502",
-        vehicleType: "motorcycle"
-      }
-    ])
+    .createDispatchRequest({
+      category: "Food",
+      longitude: 3.623563,
+      latitude: 6.4784693,
+      destinationLongitude: 3.3252381,
+      destinationLatitude: 6.513657500000001,
+      product: "Rice & chicken",
+      phoneNumber: "+2349066277540",
+      recipientName: "Kingsley Marcus",
+      recipientPhoneNumber: "+2348166691502",
+      vehicleType: "motorcycle",
+      senderName: "Thomas Aquinas"
+    })
     .send();
 })();
 ```
 
-The `send` method returns a `Promise<InitRequestResponse | InitRequestResponse[]>`. You can either await it or call `then`. The `InitRequestResponse` interface looks like this:
+The `send` method returns a `Promise<InitRequestResponse>`. You can either await it or call `then`. The `InitRequestResponse` interface looks like this:
 
 ```typescript
 interface RequestMessage {
@@ -139,6 +138,7 @@ interface RequestMessage {
   recipientPhoneNumber: string;
   recipientName: string;
   phoneNumber: string;
+  senderName: string;
 }
 
 interface InitRequestResponse {
@@ -213,17 +213,17 @@ You can use the `amount` property in setting the value of the amount while payin
 
 #### Confirming dispatch requests
 
-Call the `confirmDispatchRequests` method to confirm dispatch requests. It takes an array of strings (request identifiers) as argument.
+Call the `confirmDispatchRequest` method to confirm dispatch requests. It takes a string (the request identifier) as argument.
 
 ```javascript
 (async () => {
   const response = await requests
-    .confirmDispatchRequests(["9b1923cd-fc84-4a8a-b363-e11138891a43"])
+    .confirmDispatchRequest("9b1923cd-fc84-4a8a-b363-e11138891a43")
     .send();
 })();
 ```
 
-The `send` function returns a `Promise<ConfirmRequestResponse[] | ConfirmRequestResponse>`.
+The `send` function returns a `Promise<ConfirmRequestResponse>`.
 
 ```typescript
 interface ConfirmRequestResponse {
