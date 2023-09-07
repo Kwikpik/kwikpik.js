@@ -1,6 +1,6 @@
 import assert from "assert";
 import { KwikPikHTTPsAgent } from "../https";
-import { assign, forEach, isEqual, replace } from "lodash";
+import { assign, isNil, replace } from "lodash";
 import { initRequestSchema, updateRequestSchema } from "../schemas/requests";
 import config from "../config.json";
 
@@ -79,6 +79,11 @@ interface Request {
    * This number would receive the protection code for this delivery
    */
   phoneNumber: number;
+
+  /**
+   * The name of the sender of this package
+   */
+  senderName: string;
 }
 
 export interface RequestMessage {
@@ -172,71 +177,47 @@ export class Requests {
 
   /**
    *
-   * @param requests An array of requests
+   * @param requests A single request
    * @returns
    * @description Initializes new dispatch requests but does not broadcast them.
    */
-  public createDispatchRequests(requests: Array<Request>) {
-    assert.ok(requests.length > 0, "invalid number of requests. must be > 0");
+  public createDispatchRequest(request: Request) {
+    const { error } = initRequestSchema.validate(request);
 
-    forEach(requests, (request) => {
-      const { error } = initRequestSchema.validate(request);
-      if (error) {
-        const messages = error.details.map((e) => e.message);
-        throw new Error(JSON.stringify(messages, undefined, 2));
-      }
-    });
+    if (!isNil(error)) {
+      const messages = error.details.map((e) => e.message);
+      throw new Error(JSON.stringify(messages, undefined, 2));
+    }
 
-    forEach(requests, (request, index) => {
-      if (!request.quantity) assign(request, { quantity: 1 });
+    if (isNil(request.quantity)) assign(request, { quantity: 1 });
+    if (isNil(request.description))
+      assign(request, { description: "no description" });
 
-      if (!request.description)
-        assign(request, { description: "no description" });
+    if (isNil(request.image)) assign(request, { image: "" });
 
-      if (!request.image) assign(request, { image: "" });
-
-      if (!isEqual(request, requests[index]))
-        requests.splice(index, 1, request);
-    });
-
-    const path =
-      requests.length > 1
-        ? config.paths.requests.initialize_batch_requests
-        : config.paths.requests.initialize_request;
-    const data = requests.length > 1 ? { requests } : requests[0];
-    return this.agent.createKwikPikSendableInstance<
-      InitRequestResponse[] | InitRequestResponse
-    >(path, "post", data);
+    return this.agent.createKwikPikSendableInstance<InitRequestResponse>(
+      config.paths.requests.initialize_request,
+      "post",
+      request
+    );
   }
 
   /**
    *
-   * @param requestIds IDs of initialized requests
+   * @param requestId ID of initialized request
    * @returns
    * @description Confirms initialized dispatch requests after user has paid from their wallet. Throws an error for a request that wasn't paid for
    */
-  public confirmDispatchRequests(requestIds: Array<string>) {
+  public confirmDispatchRequest(requestId: string) {
     assert.ok(
-      requestIds.length > 0,
-      "invalid number of request IDs. must be > 0"
+      typeof requestId === "string",
+      `Require string but found ${typeof requestId}`
     );
-
-    forEach(requestIds, (requestId) => {
-      assert.ok(
-        typeof requestId === "string",
-        `Require string but found ${typeof requestId}`
-      );
-    });
-
-    const path =
-      requestIds.length > 1
-        ? config.paths.requests.confirm_batch_requests
-        : config.paths.requests.confirm_request;
-    const data =
-      requestIds.length > 1 ? { requestIds } : { requestId: requestIds[0] };
-    return this.agent.createKwikPikSendableInstance<
-      ConfirmRequestResponse[] | ConfirmRequestResponse
-    >(path, "post", data);
+    return this.agent.createKwikPikSendableInstance<ConfirmRequestResponse>(
+      config.paths.requests.confirm_request,
+      "post",
+      { requestId }
+    );
   }
 
   /**
