@@ -15,6 +15,7 @@ export const initRequestSchema = Joi.object({
     .valid("car", "bus", "bicycle", "van", "truck", "motorcycle")
     .required(),
   recipientName: Joi.string().required(),
+  senderName: Joi.string().required(),
   recipientPhoneNumber: Joi.string()
     .max(50)
     .pattern(
@@ -56,6 +57,7 @@ export const updateRequestSchema = Joi.object({
     longitude: Joi.number().required()
   }).optional(),
   recipientName: Joi.string().optional(),
+  senderName: Joi.string().optional(),
   recipientPhoneNumber: Joi.string()
     .max(50)
     .pattern(
