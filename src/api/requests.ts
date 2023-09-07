@@ -116,6 +116,7 @@ export interface RequestMessage {
   recipientPhoneNumber: string;
   recipientName: string;
   phoneNumber: string;
+  senderName: string;
 }
 
 interface SingleRequestResponse extends RequestMessage {
