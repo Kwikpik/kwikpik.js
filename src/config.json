@@ -4,8 +4,7 @@
   "paths": {
     "account": {
       "authenticate": "/business/authenticate",
-      "get_wallet": "/wallet/business",
-      "pay_for_request": "/wallet/business/pay_for_request"
+      "get_wallet": "/wallet/business"
     },
     "requests": {
       "initialize_request": "/broker/init_request_ride/business",
