@@ -77,34 +77,6 @@ interface AccountWallet {
   updatedAt: string;
 }
 
-interface PayForRequestBody {
-  /**
-   * Id of the request
-   */
-  requestId: string;
-
-  /**
-   * Amount to pay
-   */
-  amount: number;
-
-  /**
-   * Promo code (if any)
-   */
-  promoCode?: string;
-}
-
-interface PaymentResponse {
-  id: string;
-  amount: number;
-  walletId: string;
-  requestId: string;
-  status: "PENDING" | "PAID";
-  kind: "CRYPTO" | "FIAT";
-  createdAt: string;
-  updatedAt: string;
-}
-
 interface AccountRequestResponse extends RequestMessage {
   id: string;
   status:
@@ -156,20 +128,6 @@ export class Accounts {
     return this.agent.createKwikPikCallableInstance<AccountWallet>(
       config.paths.account.get_wallet,
       "get"
-    );
-  }
-
-  /**
-   *
-   * @param data Data to send to the KwikPik gateway
-   * @description Pay for a request. You must have enough wallet balance which must be greater than your book balance. Also note that the exact amount must be paid to avoid error during confirmation. This doesn't immediately deduct from your balance until the request has been completed.
-   * @returns
-   */
-  public payForRequest(data: PayForRequestBody) {
-    return this.agent.createKwikPikSendableInstance<PaymentResponse>(
-      config.paths.account.pay_for_request,
-      "post",
-      data
     );
   }
 

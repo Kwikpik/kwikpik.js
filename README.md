@@ -149,38 +149,7 @@ interface InitRequestResponse {
 }
 ```
 
-#### Paying for dispatch requests
-
-You can pay for dispatch requests by calling the `payForRequest` method of the `Accounts` class. This class is exposed by `initializeAPI`. The function takes a key-value pair object as argument. The keys to include in this object are `amount` which is how much you're paying for the request and `requestId` which is the unique identifier for the request. It returns a `KwikPikSendableHTTPsService` class
-
-```javascript
-// Removed for the sake of brevity
-(async () => {
-  const payment = await kwikpik.accounts
-    .payForRequest({
-      amount: 17520.20435673091,
-      requestId: "9b1923cd-fc84-4a8a-b363-e11138891a43"
-    })
-    .send();
-})();
-```
-
-Calling the `send` function of the returned class returns a `Promise<PaymentResponse>` which you can await or call `then` on. The `PaymentResponse` interface looks like this:
-
-```typescript
-interface PaymentResponse {
-  id: string;
-  amount: number;
-  walletId: string;
-  requestId: string;
-  status: "PENDING" | "PAID";
-  kind: "CRYPTO" | "FIAT";
-  createdAt: string;
-  updatedAt: string;
-}
-```
-
-If you are uncertain with regard to how much to pay for a request, you can call the `getSingleRequest` function which returns a `KwikPikCallableHTTPsService` class like so:
+#### Getting a single dispatch request
 
 ```javascript
 // Removed for the sake of brevity
@@ -208,8 +177,6 @@ interface SingleRequestResponse extends RequestMessage {
   amount: number;
 }
 ```
-
-You can use the `amount` property in setting the value of the amount while paying for the request.
 
 #### Confirming dispatch requests
 
@@ -291,5 +258,3 @@ interface Account {
   isVerified: boolean;
 }
 ```
-
-**Extensive documentation coming soon**
