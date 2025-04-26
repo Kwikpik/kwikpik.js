@@ -30,13 +30,16 @@ Full tech stack [here](/techstack.md)
 <div align="center">
 
 # Tech Stack File
-![](https://img.stackshare.io/repo.svg "repo") [Kwikpik/kwikpik.js](https://github.com/Kwikpik/kwikpik.js)![](https://img.stackshare.io/public_badge.svg "public")
+
+![](https://img.stackshare.io/repo.svg 'repo') [Kwikpik/kwikpik.js](https://github.com/Kwikpik/kwikpik.js)![](https://img.stackshare.io/public_badge.svg 'public')
 <br/><br/>
 |11<br/>Tools used|01/05/24 <br/>Report generated|
 |------|------|
+
 </div>
 
 ## <img src='https://img.stackshare.io/languages.svg'/> Languages (2)
+
 <table><tr>
   <td align='center'>
   <img width='36' height='36' src='https://img.stackshare.io/service/1209/javascript.jpeg' alt='JavaScript'>
@@ -58,6 +61,7 @@ Full tech stack [here](/techstack.md)
 </table>
 
 ## <img src='https://img.stackshare.io/devops.svg'/> DevOps (3)
+
 <table><tr>
   <td align='center'>
   <img width='36' height='36' src='https://img.stackshare.io/service/1046/git.png' alt='Git'>
@@ -87,6 +91,7 @@ Full tech stack [here](/techstack.md)
 </table>
 
 ## Other (2)
+
 <table><tr>
   <td align='center'>
   <img width='36' height='36' src='https://img.stackshare.io/service/2438/lodash.png' alt='Lodash'>
@@ -107,17 +112,16 @@ Full tech stack [here](/techstack.md)
 </tr>
 </table>
 
-
 ## <img src='https://img.stackshare.io/group.svg' /> Open source packages (4)</h2>
 
 ## <img width='24' height='24' src='https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png'/> npm (4)
 
-|NAME|VERSION|LAST UPDATED|LAST UPDATED BY|LICENSE|VULNERABILITIES|
-|:------|:------|:------|:------|:------|:------|
-|[@types/joi](https://www.npmjs.com/@types/joi)|v17.2.3|06/19/23|Kingsley Victor |MIT|N/A|
-|[@types/lodash](https://www.npmjs.com/@types/lodash)|v4.14.195|06/19/23|Kingsley Victor |MIT|N/A|
-|[assert](https://www.npmjs.com/assert)|v2.0.0|06/16/23|Kingsley Victor |MIT|N/A|
-|[joi](https://www.npmjs.com/joi)|v17.9.2|06/16/23|Kingsley Victor |BSD-3-Clause|N/A|
+| NAME                                                 | VERSION   | LAST UPDATED | LAST UPDATED BY | LICENSE      | VULNERABILITIES |
+| :--------------------------------------------------- | :-------- | :----------- | :-------------- | :----------- | :-------------- |
+| [@types/joi](https://www.npmjs.com/@types/joi)       | v17.2.3   | 06/19/23     | Kingsley Victor | MIT          | N/A             |
+| [@types/lodash](https://www.npmjs.com/@types/lodash) | v4.14.195 | 06/19/23     | Kingsley Victor | MIT          | N/A             |
+| [assert](https://www.npmjs.com/assert)               | v2.0.0    | 06/16/23     | Kingsley Victor | MIT          | N/A             |
+| [joi](https://www.npmjs.com/joi)                     | v17.9.2   | 06/16/23     | Kingsley Victor | BSD-3-Clause | N/A             |
 
 <br/>
 <div align='center'>

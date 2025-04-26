@@ -39,8 +39,8 @@ The Kwikpik package provides access to the following classes:
 These classes can be imported directly and then initialized/instantiated or their instances can be accessed using the `initializeAPI` function which takes two arguments (one required and one optional) - an API key and an environment type (production or development).
 
 ```javascript
-const { initializeAPI } = require("@kwikpik/kwikpik.js");
-const kwikpik = initializeAPI("YOUR_API_KEY", "prod | dev");
+const { initializeAPI } = require('@kwikpik/kwikpik.js');
+const kwikpik = initializeAPI('YOUR_API_KEY', 'prod | dev');
 
 kwikpik.requests; // Requests instance
 kwikpik.accounts; // Accounts instance
@@ -65,16 +65,16 @@ Utility class that provides functions that are relevant to dispatch requests. Ea
 You can create an instance of Requests like so:
 
 ```javascript
-const { Requests } = require("@kwikpik/kwikpik.js");
+const { Requests } = require('@kwikpik/kwikpik.js');
 
-const requests = Requests.initialize("API_KEY", "prod | dev");
+const requests = Requests.initialize('API_KEY', 'prod | dev');
 ```
 
 or you can access an already created instance:
 
 ```javascript
-const { initializeAPI } = require("@kwikpik/kwikpik.js");
-const kwikpik = initializeAPI("YOUR_API_KEY", "prod | dev");
+const { initializeAPI } = require('@kwikpik/kwikpik.js');
+const kwikpik = initializeAPI('YOUR_API_KEY', 'prod | dev');
 
 kwikpik.requests; // Requests instance
 ```
@@ -89,17 +89,17 @@ To create new dispatch requests, utilize the `createDispatchRequest` function. I
 (async () => {
   const newRequest = await kwikpik.requests
     .createDispatchRequest({
-      category: "Food",
+      category: 'Food',
       longitude: 3.623563,
       latitude: 6.4784693,
       destinationLongitude: 3.3252381,
       destinationLatitude: 6.513657500000001,
-      product: "Rice & chicken",
-      phoneNumber: "+2349066277540",
-      recipientName: "Kingsley Marcus",
-      recipientPhoneNumber: "+2348166691502",
-      vehicleType: "motorcycle",
-      senderName: "Thomas Aquinas"
+      product: 'Rice & chicken',
+      phoneNumber: '+2349066277540',
+      recipientName: 'Kingsley Marcus',
+      recipientPhoneNumber: '+2348166691502',
+      vehicleType: 'motorcycle',
+      senderName: 'Thomas Aquinas',
     })
     .send();
 })();
@@ -124,13 +124,13 @@ interface RequestMessage {
     value: number | null;
   };
   selectedVehicleType:
-    | "car"
-    | "bus"
-    | "bicycle"
-    | "truck"
-    | "van"
-    | "motorcycle";
-  userType: "BUSINESS" | "REGULAR_USER";
+    | 'car'
+    | 'bus'
+    | 'bicycle'
+    | 'truck'
+    | 'van'
+    | 'motorcycle';
+  userType: 'BUSINESS' | 'REGULAR_USER';
   destination: {
     latitude: number;
     longitude: number;
@@ -155,7 +155,7 @@ interface InitRequestResponse {
 // Removed for the sake of brevity
 (async () => {
   const request = await kwikpik.requests
-    .getSingleRequest("6f705d48-4fda-4054-8f4d-6eb34b4161f1")
+    .getSingleRequest('6f705d48-4fda-4054-8f4d-6eb34b4161f1')
     .call();
 })();
 ```
@@ -165,10 +165,10 @@ The `call` function returns a `Promise<SingleRequestResponse>`. The `SingleReque
 ```typescript
 interface SingleRequestResponse extends RequestMessage {
   status:
-    | "CANCELLED"
-    | "DELIVERED"
-    | "INIT_RIDE_REQUEST"
-    | "CONFIRMED_RIDE_REQUEST";
+    | 'CANCELLED'
+    | 'DELIVERED'
+    | 'INIT_RIDE_REQUEST'
+    | 'CONFIRMED_RIDE_REQUEST';
   riderId: string | null;
   isInTransit: boolean;
   createdAt: string;
@@ -185,7 +185,7 @@ Call the `confirmDispatchRequest` method to confirm dispatch requests. It takes 
 ```javascript
 (async () => {
   const response = await requests
-    .confirmDispatchRequest("9b1923cd-fc84-4a8a-b363-e11138891a43")
+    .confirmDispatchRequest('9b1923cd-fc84-4a8a-b363-e11138891a43')
     .send();
 })();
 ```
