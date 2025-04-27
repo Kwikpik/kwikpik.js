@@ -134,6 +134,7 @@ export class SDK {
       this.$promises = [];
       return fulfilled;
     } catch (error: any) {
+      this.$promises = [];
       return Promise.reject(error);
     }
   }
